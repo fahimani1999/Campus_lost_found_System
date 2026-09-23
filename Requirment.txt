@@ -1,3 +1,5 @@
 Django
 Psycopg
 Pillow
+django-admin startproject campus_lost_found                                        
+python manage.py startapp report                                                                                         
