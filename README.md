@@ -10,4 +10,4 @@ The project uses Django Forms for user registration and report submission, Djang
 
 A custom middleware is also implemented to log the username, HTTP request method, requested URL/path, and request processing time in the terminal.
 
-The main purpose of this project is to demonstrate practical use of Forms, Templates, User Interaction, CRUD operations, Authentication, Middleware, Django ORM, PostgreSQL, and Messages in a real-world Django application.
+The main purpose of this project is to demonstrate practical use of  real-world Django application.
