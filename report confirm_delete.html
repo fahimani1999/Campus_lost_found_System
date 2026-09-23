@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Report{% endblock %}
+
+{% block content %}
+
+<div class="confirm-card">
+
+<h1>Delete Report</h1>
+
+<p>
+    Are you sure you want to delete
+    <strong>{{ report.item_name }}</strong>?
+</p>
+
+<p class="warning-text">
+    This action cannot be undone.
+</p>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <button type="submit" class="button danger">
+        Yes, Delete
+    </button>
+
+    <a
+        href="{% url 'report_detail' report.pk %}"
+        class="button secondary"
+    >
+        Cancel
+    </a>
+
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}{{ report.item_name }} - Report{% endblock %}
+
+{% block content %}
+
+<div class="detail-card">
+
+{% if report.image %}
+    <img
+        src="{{ report.image.url }}"
+        alt="{{ report.item_name }}"
+        class="detail-image"
+    >
+{% endif %}
+
+<div class="detail-content">
+
+    <span class="badge {{ report.report_type|lower }}">
+        {{ report.report_type }}
+    </span>
+
+    <span class="badge status-{{ report.status|lower }}">
+        {{ report.status }}
+    </span>
+
+    <h1>{{ report.item_name }}</h1>
+
+    <p>
+        <strong>Category:</strong>
+        {{ report.category }}
+    </p>
+
+    <p>
+        <strong>Description:</strong>
+        {{ report.description }}
+    </p>
+
+    <p>
+        <strong>Location:</strong>
+        {{ report.location }}
+    </p>
+
+    <p>
+        <strong>Date:</strong>
+        {{ report.date }}
+    </p>
+
+    <p>
+        <strong>Contact:</strong>
+        {{ report.contact_information }}
+    </p>
+
+    <p>
+        <strong>Reported by:</strong>
+        {{ report.owner.username }}
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+        {{ report.status }}
+    </p>
+
+    {% if user == report.owner %}
+
+        <div class="action-buttons">
+
+            {% if report.status == "Active" %}
+                <form
+                    method="post"
+                    action="{% url 'report_resolve' report.pk %}"
+                >
+                    {% csrf_token %}
+                    <button type="submit" class="button success">
+                        Mark as Resolved
+                    </button>
+                </form>
+            {% endif %}
+
+            <a
+                href="{% url 'report_update' report.pk %}"
+                class="button"
+            >
+                Edit
+            </a>
+
+            <a
+                href="{% url 'report_delete' report.pk %}"
+                class="button danger"
+            >
+                Delete
+            </a>
+
+        </div>
+
+    {% endif %}
+
+    <a href="{% url 'reports' %}" class="back-link">
+        ← Back to Reports
+    </a>
+
+</div>
+
+</div>
+
+{% endblock %}

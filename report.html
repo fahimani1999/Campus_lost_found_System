@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - Campus Lost & Found{% endblock %}
+
+{% block content %}
+
+<div class="page-header"> <h1>Lost & Found Reports</h1> <p>Search and filter campus reports.</p> </div>
+
+<form method="get" class="filter-form">
+
+<div class="form-group">
+    <label for="search">Search</label>
+    <input
+        type="text"
+        id="search"
+        name="search"
+        value="{{ request.GET.search }}"
+        placeholder="Search item, description or location"
+    >
+</div>
+
+<div class="form-group">
+    <label for="category">Category</label>
+    <input
+        type="text"
+        id="category"
+        name="category"
+        value="{{ request.GET.category }}"
+        placeholder="Category"
+    >
+</div>
+
+<div class="form-group">
+    <label for="type">Type</label>
+    <select name="type" id="type">
+        <option value="">All</option>
+        <option value="Lost">Lost</option>
+        <option value="Found">Found</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="status">Status</label>
+    <select name="status" id="status">
+        <option value="">All</option>
+        <option value="Active">Active</option>
+        <option value="Resolved">Resolved</option>
+    </select>
+</div>
+
+<button type="submit" class="button">
+    Search
+</button>
+
+<a href="{% url 'reports' %}" class="button secondary">
+    Clear
+</a>
+
+</form>
+
+<div class="report-grid">
+
+{% for report in reports %}
+
+    <div class="report-card">
+
+        {% if report.image %}
+            <img
+                src="{{ report.image.url }}"
+                alt="{{ report.item_name }}"
+                class="report-image"
+            >
+        {% endif %}
+
+        <div class="report-card-content">
+
+            <span class="badge {{ report.report_type|lower }}">
+                {{ report.report_type }}
+            </span>
+
+            <span class="badge status-{{ report.status|lower }}">
+                {{ report.status }}
+            </span>
+
+            <h2>{{ report.item_name }}</h2>
+
+            <p>
+                <strong>Category:</strong>
+                {{ report.category }}
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                {{ report.location }}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                {{ report.date }}
+            </p>
+
+            <a
+                href="{% url 'report_detail' report.pk %}"
+                class="button small"
+            >
+                View Details
+            </a>
+
+        </div>
+
+    </div>
+
+{% empty %}
+
+    <div class="empty-state">
+        <h2>No reports found</h2>
+        <p>There are no reports matching your search.</p>
+    </div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

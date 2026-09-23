@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}My Reports{% endblock %}
+
+{% block content %}
+
+<div class="page-header"> <h1>My Reports</h1> <p>Manage the reports you have created.</p> </div>
+
+<div class="report-grid">
+
+{% for report in reports %}
+
+    <div class="report-card">
+
+        {% if report.image %}
+            <img
+                src="{{ report.image.url }}"
+                alt="{{ report.item_name }}"
+                class="report-image"
+            >
+        {% endif %}
+
+        <div class="report-card-content">
+
+            <span class="badge {{ report.report_type|lower }}">
+                {{ report.report_type }}
+            </span>
+
+            <span class="badge status-{{ report.status|lower }}">
+                {{ report.status }}
+            </span>
+
+            <h2>{{ report.item_name }}</h2>
+
+            <p>
+                <strong>Category:</strong>
+                {{ report.category }}
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                {{ report.location }}
+            </p>
+
+            <div class="action-buttons">
+
+                <a
+                    href="{% url 'report_detail' report.pk %}"
+                    class="button small"
+                >
+                    View
+                </a>
+
+                <a
+                    href="{% url 'report_update' report.pk %}"
+                    class="button small"
+                >
+                    Edit
+                </a>
+
+                <a
+                    href="{% url 'report_delete' report.pk %}"
+                    class="button danger small"
+                >
+                    Delete
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% empty %}
+
+    <div class="empty-state">
+
+        <h2>You have no reports</h2>
+
+        <p>Create your first Lost & Found report.</p>
+
+        <a href="{% url 'report_create' %}" class="button">
+            Create Report
+        </a>
+
+    </div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
